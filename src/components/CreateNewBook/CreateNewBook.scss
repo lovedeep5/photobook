@@ -1,0 +1,33 @@
+.create-new-book-container {
+  width: 100%;
+
+  .page-view {
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    background-color: rgba(190, 247, 193, 0.438);
+    border-radius: 5px;
+    outline: 1px solid rgba(184, 180, 180, 0.2);
+    outline-offset: -20px;
+    outline-style: groove;
+    border: 1px solid rgba(184, 180, 180, 0.5);
+  }
+
+  .book-thumbnails {
+    width: 100%;
+    border-top: 2px solid rgba(184, 180, 180, 0.5);
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+
+    > div {
+      position: relative;
+      box-shadow: 0px 2px 5px rgba(184, 180, 180, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+  }
+}
