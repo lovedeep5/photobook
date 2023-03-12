@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import FileUploadActions from "../FileUploadActions/FileUploadActions";
 import { getResponsiveSize, getResponsiveThumbnailsSize } from "../../helpers";
 import Thumbnails from "../Thumbnails/Thumbnails";
 import "./CreateNewBook.scss";
 import { useBookContext } from "../../store/BookContext";
-
+import SavePhotoBook from "../SavePhotoBook/SavePhotoBook";
 const bookSpecifications = {
   size: { width: 800, height: 400 },
   pages: 5,
@@ -37,13 +36,12 @@ const CreateNewBook = () => {
   const bookImages = state?.book?.images;
   const bookImagesLength = bookImages?.length;
   const currentPreviewImage = state?.book?.currentPreviewImage;
-  const [pagePreview, setPagePreview] = useState("");
 
   React.useEffect(() => {
     if (bookImagesLength) {
-      setPagePreview(bookImages[0]);
+      setPagePreview(bookImages.files[0]);
     }
-  }, [bookImagesLength, bookImages]);
+  }, [bookImagesLength, bookImages.files]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,8 +64,9 @@ const CreateNewBook = () => {
         ></div>
       </div>
       <div className="book-thumbnails">
-        {bookImages.length &&
-          bookImages.map((image, index) => {
+        {bookImages.loading && <div>Loading...</div>}
+        {bookImages.files.length &&
+          bookImages.files.map((image, index) => {
             const classes = addClasses(index, bookImagesLength);
 
             return (
@@ -77,10 +76,12 @@ const CreateNewBook = () => {
                 size={responsiveThumbnailsSize}
                 index={index}
                 key={index}
-                setPagePreview={setPagePreview}
               />
             );
           })}
+      </div>
+      <div className="save">
+        <SavePhotoBook />
       </div>
     </div>
   );

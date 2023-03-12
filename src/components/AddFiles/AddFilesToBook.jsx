@@ -2,9 +2,10 @@ import React from "react";
 import { useBookContext } from "../../store/BookContext";
 
 const AddFilesToBook = () => {
-  const { dispatch } = useBookContext();
+  const { dispatch, state } = useBookContext();
 
   const handleAddFiles = (e) => {
+    dispatch({ type: "SET_BOOK_IMAGES_LOADING", payload: true });
     const files = e.target.files;
     const images = [];
     for (let i = 0; i < files.length; i++) {
@@ -21,6 +22,7 @@ const AddFilesToBook = () => {
           });
       };
       reader.readAsDataURL(file);
+      dispatch({ type: "SET_BOOK_IMAGES_LOADING", payload: false });
     }
 
     dispatch({ type: "SET_BOOK_FILES_TO_UPLOAD", payload: files });

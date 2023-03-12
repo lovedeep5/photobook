@@ -23,8 +23,8 @@ const initialState = {
     title: "",
     size: { width: 800, height: 400 },
     pages: 5,
-    images: [],
-    filesToUpload: [],
+    images: { files: [], loading: false, error: null },
+    filesToUpload: { files: [], loading: false, error: null },
     currentPreviewImage: "",
   },
 };
@@ -69,12 +69,34 @@ const reducer = (state, action) => {
           pages: payload,
         },
       };
+    case "SET_BOOK_IMAGES_LOADING":
+      return {
+        ...state,
+        book: {
+          ...state.book,
+          images: { ...state.book.images, loading: payload },
+        },
+      };
+    case "SET_BOOK_IMAGES_ERROR":
+      return {
+        ...state,
+        book: {
+          ...state.book,
+          images: { ...state.book.images, error: payload },
+        },
+      };
+
     case "SET_BOOK_IMAGES":
       return {
         ...state,
         book: {
           ...state.book,
-          images: payload,
+          images: {
+            ...state.book.images,
+            files: payload,
+            error: null,
+            loading: false,
+          },
         },
       };
     case "SET_BOOK_FILES_TO_UPLOAD":
@@ -82,18 +104,21 @@ const reducer = (state, action) => {
         ...state,
         book: {
           ...state.book,
-          filesToUpload: payload,
+          filesToUpload: { ...state.filesToUpload, files: payload },
         },
       };
 
     case "SET_BOOK_FILES_TO_UPLOAD_INDEX":
-      const updatedFilesToUpload = [...state?.book?.filesToUpload];
+      const updatedFilesToUpload = [...state?.book?.filesToUpload.files];
       updatedFilesToUpload[payload.index] = payload.file;
       return {
         ...state,
         book: {
           ...state?.book,
-          filesToUpload: updatedFilesToUpload,
+          filesToUpload: {
+            ...state.book.filesToUpload,
+            files: updatedFilesToUpload,
+          },
         },
       };
 
