@@ -3,12 +3,13 @@ import FileUploadActions from "../FileUploadActions/FileUploadActions";
 import { useBookContext } from "../../store/BookContext";
 import "./Thumbnails.scss";
 
-const Thumbnails = ({ classes, image, size, index, setPagePreview }) => {
+const Thumbnails = ({ classes, image, size, index }) => {
   const [thumbnailImage, setThumbnailImage] = useState(image);
   const { dispatch } = useBookContext();
 
   return (
     <div
+      draggable
       onClick={() =>
         dispatch({
           type: "SET_BOOK_CURRENT_PREVIEW_IMAGE",
