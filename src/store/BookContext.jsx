@@ -1,20 +1,4 @@
 import React, { createContext, useContext, useReducer } from "react";
-
-const book = {
-  size: { width: 800, height: 400 },
-  pages: 5,
-  images: [
-    "https://picsum.photos/800/400?peoples1",
-    "https://picsum.photos/400/400?peoples2",
-    "https://picsum.photos/800/400?peoples3",
-    "https://picsum.photos/800/400?peoples4",
-    "https://picsum.photos/800/400?peoples5",
-    "https://picsum.photos/800/400?peoples6",
-    "https://picsum.photos/800/400?peoples7",
-    "https://picsum.photos/400/400?peoples8",
-  ],
-};
-
 const BookContextWrapper = createContext();
 
 const initialState = {
@@ -24,8 +8,8 @@ const initialState = {
     size: { width: 800, height: 400 },
     pages: 5,
     images: { files: [], loading: false, error: null },
-    filesToUpload: { files: [], loading: false, error: null },
     currentPreviewImage: "",
+    loading: false,
   },
 };
 
@@ -99,25 +83,17 @@ const reducer = (state, action) => {
           },
         },
       };
-    case "SET_BOOK_FILES_TO_UPLOAD":
+
+    case "DELETE_BOOK_IMAGE":
       return {
         ...state,
         book: {
           ...state.book,
-          filesToUpload: { ...state.filesToUpload, files: payload },
-        },
-      };
-
-    case "SET_BOOK_FILES_TO_UPLOAD_INDEX":
-      const updatedFilesToUpload = [...state?.book?.filesToUpload.files];
-      updatedFilesToUpload[payload.index] = payload.file;
-      return {
-        ...state,
-        book: {
-          ...state?.book,
-          filesToUpload: {
-            ...state.book.filesToUpload,
-            files: updatedFilesToUpload,
+          images: {
+            ...state.book.images,
+            files: state.book.images.files.filter(
+              (image, index) => index !== payload
+            ),
           },
         },
       };
@@ -128,6 +104,15 @@ const reducer = (state, action) => {
         book: {
           ...state.book,
           currentPreviewImage: payload,
+        },
+      };
+
+    case "LOADING":
+      return {
+        ...state,
+        book: {
+          ...state.book,
+          loading: payload,
         },
       };
 

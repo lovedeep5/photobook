@@ -1,39 +1,41 @@
 import React from "react";
 import { useBookContext } from "../../store/BookContext";
 import { uploadFiles } from "../../features/actions";
+import { AiFillSave } from "react-icons/ai";
+import "./SavePhotoBook.scss";
+
+const formData = new FormData();
 
 const SavePhotoBook = () => {
   const { state, dispatch } = useBookContext();
+
   const handleSave = async () => {
     // TEST REMOVE IT
-    const formData = new FormData();
 
-    for (
-      let index = 0;
-      index < state.book.filesToUpload.files.length;
-      index++
-    ) {
-      formData.append(
-        `files`,
-        state.book.filesToUpload.files[index],
-        `file_${index}`
-      );
+    for (let index = 0; index < state.book.images.files.length; index++) {
+      formData.append(`files`, state.book.images.files[index], `file_${index}`);
     }
 
-    formData.append("title", "test title");
-    formData.append("size", { width: 800, height: 400 });
-    formData.append("pages", 30);
-    formData.append("email", "lovedeep5.abh@gmail.com");
+    const config = {
+      title: state?.book?.title,
+      size: { width: 800, height: 400 },
+      pages: state.book.images.files.length,
+      email: "lovedeep5.abh@gmail.com",
+    };
 
-    const response = await uploadFiles(formData, dispatch);
+    const configString = JSON.stringify(config);
 
-    console.log("response", response);
+    formData.append("config", configString);
+    uploadFiles(formData, dispatch);
   };
+
   return (
-    <div>
-      <button onClick={handleSave}>Save</button>
+    <div className="saveContainer">
+      <button onClick={handleSave}>
+        <AiFillSave className="icon" /> Save
+      </button>
     </div>
   );
 };
 
-export default SavePhotoBook;
+export default React.memo(SavePhotoBook);

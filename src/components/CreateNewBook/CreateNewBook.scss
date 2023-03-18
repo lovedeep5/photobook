@@ -1,6 +1,10 @@
 .create-new-book-container {
   width: 100%;
 
+  .page-view-container {
+    margin-bottom: 300px;
+  }
+
   .page-view {
     width: 80%;
     height: 400px;
@@ -14,13 +18,32 @@
   }
 
   .book-thumbnails {
-    width: 100%;
     border-top: 2px solid rgba(184, 180, 180, 0.5);
     margin-top: 20px;
-    padding: 20px;
+    padding: 20px 50px;
     display: flex;
     gap: 10px;
+    overflow-y: hidden;
     overflow-x: scroll;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background: #fff8c4;
+
+    scrollbar-width: thin; /* set the scrollbar width to thin */
+    scrollbar-color: #999999 #f5f5f5; /* set the scrollbar color */
+
+    /* Customize the scrollbar thumb */
+    ::-webkit-scrollbar-thumb {
+      background-color: #999999; /* set the thumb color */
+      border-radius: 5px; /* round the corners of the thumb */
+    }
+
+    /* Customize the scrollbar track */
+    ::-webkit-scrollbar-track {
+      background-color: #f5f5f5; /* set the track color */
+      border-radius: 5px; /* round the corners of the track */
+    }
 
     > div {
       position: relative;
@@ -28,6 +51,28 @@
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 1px;
       overflow: hidden;
+    }
+  }
+}
+
+.titleEditingContainer {
+  height: 100px;
+  padding: 20px;
+
+  .titleEditing {
+    display: block;
+    text-align: center;
+
+    p {
+      margin: 0;
+    }
+
+    .titleEditingInput {
+      padding: 10px;
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid #d7b0b0;
+      box-shadow: 3px 3px 2px -2px #e7e0e0;
     }
   }
 }

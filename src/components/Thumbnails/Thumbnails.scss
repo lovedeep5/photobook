@@ -1,4 +1,13 @@
-.cover-thumbnail {
+.thumbnail {
+  width: 200px;
+  height: 100px;
+  background-color: rgba(190, 247, 193, 0.8);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+.thumbnail:first-of-type {
   width: 200px;
   height: 100px;
   background-color: rgba(190, 247, 193, 0.8);
@@ -8,27 +17,57 @@
   background-position: right;
 }
 
-.first-page-thumbnail,
-.last-page-thumbnail {
-  width: 100px;
-  height: 100px;
-  background-color: rgba(190, 247, 193, 0.8);
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.first-page-thumbnail {
+.thumbnail:nth-child(1),
+.thumbnail:nth-child(2) {
   background-position: right;
 }
 
-.last-page-thumbnail {
+.thumbnail:nth-child(2):before {
+  content: "This half should be empty.";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(94, 42, 42, 0.6);
+  z-index: 1;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.thumbnail:last-of-type {
   background-position: left;
 }
 
-.page {
-  width: 200px;
-  height: 100px;
-  background-color: rgba(190, 247, 193, 0.8);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+.thumbnail:last-of-type:after {
+  content: "This half should be empty.";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(94, 42, 42, 0.6);
+  z-index: 1;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.dragOver {
+  margin-left: 80px;
+  transition: all 0.5s;
+  box-shadow: 0px 5px 10px rgba(190, 247, 193, 0.8);
 }

@@ -1,36 +1,48 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useBookContext } from "../../store/BookContext";
+import { GiFiles } from "react-icons/gi";
+import "./AddFilesToBook.scss";
 
 const AddFilesToBook = () => {
   const { dispatch, state } = useBookContext();
+  const [images, setImages] = useState([]);
+  const inputRef = useRef(null);
 
   const handleAddFiles = (e) => {
     dispatch({ type: "SET_BOOK_IMAGES_LOADING", payload: true });
     const files = e.target.files;
-    const images = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        images.push(e.target.result);
-        dispatch({ type: "SET_BOOK_IMAGES", payload: images });
-        i === 0 &&
-          dispatch({
-            type: "SET_BOOK_CURRENT_PREVIEW_IMAGE",
-            payload: e.target.result,
-          });
-      };
-      reader.readAsDataURL(file);
-      dispatch({ type: "SET_BOOK_IMAGES_LOADING", payload: false });
+    const newImages = [];
+    for (let file of files) {
+      newImages.push(file);
     }
+    dispatch({
+      type: "SET_BOOK_IMAGES",
+      payload: newImages,
+    });
+    dispatch({ type: "SET_BOOK_IMAGES_LOADING", payload: false });
 
-    dispatch({ type: "SET_BOOK_FILES_TO_UPLOAD", payload: files });
+    dispatch({
+      type: "SET_BOOK_CURRENT_PREVIEW_IMAGE",
+      payload: URL.createObjectURL(files[0]),
+    });
+  };
+  const handleAddFilesClick = () => {
+    inputRef.current.click();
   };
 
   return (
-    <div>
-      <input type="file" accept="image/*" multiple onChange={handleAddFiles} />
+    <div className="addFilesContainer">
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleAddFiles}
+        style={{ display: "none" }}
+        ref={inputRef}
+      />
+      <button onClick={handleAddFilesClick}>
+        <GiFiles className="addFilesIcon" /> <span>Add Files</span>
+      </button>
     </div>
   );
 };

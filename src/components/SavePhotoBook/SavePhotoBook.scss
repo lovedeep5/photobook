@@ -1,0 +1,26 @@
+.saveContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 20px;
+
+    .icon {
+      font-size: 30px;
+      margin-right: 10px;
+    }
+  }
+}
